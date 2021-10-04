@@ -5,17 +5,17 @@ import os
 import sys
 
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
-PATH=THIS_FOLDER+'/automationproj-327806-6e9bf5c39245.json'
+JSON_PATH=THIS_FOLDER+'/automationproj-327806-6e9bf5c39245.json'
 scope = ['https://spreadsheets.google.com/feeds',
          'https://www.googleapis.com/auth/drive']
-sheet="에프터마케팅18.10~의 사본"
-worksheet="2019 월보장"
-sheet=sheet.encode('utf-8')
-worksheet=worksheet.encode('utf-8')
 
-credentials=ServiceAccountCredentials.from_json_keyfile_name(PATH,scope)
+credentials=ServiceAccountCredentials.from_json_keyfile_name(JSON_PATH,scope)
 gc=gspread.authorize(credentials)
 
-gc1=gc.open(sheet).worksheet(worksheet)
-gc2=gc1.get_all_values()
-print(gc2)
+spreadsheet_url='https://docs.google.com/spreadsheets/d/1p_pr6_6dGvHvpYpYNhax2P-UR_yrNJPQ0-5ht2UxWWg/edit#gid=1476274737'
+doc=gc.open_by_url(spreadsheet_url)
+
+worksheet=doc.worksheet('2019년 월보장')
+print(worksheet)
+row_data=worksheet.row_values(1)
+print(row_data)

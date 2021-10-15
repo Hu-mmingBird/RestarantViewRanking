@@ -38,11 +38,13 @@ gc=gspread.authorize(credentials)
 gc1=gc.open('에프터마케팅18.10~의 사본').worksheet('2019년 월보장')
 
 index=len(gc1.col_values(1))
-print(index)#카운팅스케줄기준
+# print(index)#카운팅스케줄기준
 index=[i for i in range(1,index+1)]
 
 keyword=gc1.col_values(3)
 company=gc1.col_values(5)
+# col=gc1.col_values(1022)#10월7일목
+# print(col)
 info={'keyword':keyword,'company':company}
 info['keyword'].append(keyword[-1])
 info['company'].append(company[-1])
@@ -55,6 +57,17 @@ df=DataFrame(info,index=index)
 #     info['company']+=company[-1]
 #     df=DataFrame(info,index=index)
 # print(len(keyword),keyword)#375열인데 마지막 2칸짜리 공백이라 무시돼서 374개까지 나옴
-print(df)
+print(df[30:50])
 
 #label(index)접근
+"""
+1.가평맛집~홍대맛집 기록 없음, 없는 이유
+2.색상 의미
+3.코다리마을3등분->통일 ex)상무초밥
+4.상무초밥 109번째줄
+5.크롤링 업체명: 상무초밥,상무 초밥,
+6.어디가 끝인지 풀무원김치뭐임
+7.남은일수 무엇?
+8.카운팅,스케줄없음 제주 표선 맛집 세부3개 무엇?
+9.진행표시
+"""

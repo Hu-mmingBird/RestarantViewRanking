@@ -37,18 +37,24 @@ credentials=ServiceAccountCredentials.from_json_keyfile_name(JSON_PATH,scope)
 gc=gspread.authorize(credentials)
 gc1=gc.open('에프터마케팅18.10~의 사본').worksheet('2019년 월보장')
 
-index=len(gc1.col_values(1))
-# print(index)#카운팅스케줄기준
-index=[i for i in range(1,index+1)]
-
 keyword=gc1.col_values(3)
 company=gc1.col_values(5)
+info={'keyword':[],'company':[]}
+for k,c in zip(keyword,company):
+    if k=='END' and c=='END':
+        break
+    info['keyword'].append(k)
+    info['company'].append(c)
+
+df=DataFrame(info)
+df.index=df.index+1
+print(df)
 # col=gc1.col_values(1022)#10월7일목
 # print(col)
-info={'keyword':keyword,'company':company}
-info['keyword'].append(keyword[-1])
-info['company'].append(company[-1])
-df=DataFrame(info,index=index)
+# info={'keyword':keyword,'company':company}
+# info['keyword'].append(keyword[-1])
+# info['company'].append(company[-1])
+# df=DataFrame(info,index=index)
 # try:
 #     df=DataFrame(info,index=index)
 #     df.index=df.index+1
@@ -57,7 +63,7 @@ df=DataFrame(info,index=index)
 #     info['company']+=company[-1]
 #     df=DataFrame(info,index=index)
 # print(len(keyword),keyword)#375열인데 마지막 2칸짜리 공백이라 무시돼서 374개까지 나옴
-print(df[30:50])
+# print(df[30:50])
 
 #label(index)접근
 """
